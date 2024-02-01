@@ -108,7 +108,7 @@ In addition you need atleast the following functions for:
 
    Start by writing a static mock example in `index.html` to get a feel for how a single todo item should look, before trying to create a bunch of these with JavaScript.
 
-   Use the mockups to see how the list itself should be styled.
+   Duplicate the mockup Todo a couple of times to simplify the styling of the list itself.
 
 2. Keeping the DOM up to date
 
