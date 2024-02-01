@@ -2,18 +2,37 @@
 
 ## Introduction
 
-In this assignment, you will be working on creating a simple Todo List application using JavaScript, HTML and CSS. You will be provided with a set of models and interfaces to build upon, and your task is to implement the application based on these specifications along with a set of mostly empty files for a starting folder structure.
+In this assignment, you will be working on creating a simple Todo List application using JavaScript, HTML and CSS. You will be provided with a set of models and function definitions to build upon, and your task is to implement the Todo List based on these specifications. In addition you will have to wire this Todo List up to the UI by setting up event listners and writing the logic for updating the DOM whenever a change to the Todo List occurs.
+
+The content of this repository gives you a head start with a set of files and functions signatures (logic not included), to give you some structure to start off with.
+
+## Content
+
+- [Introduction](#introduction)
+- [Content](#content)
+- [Task Description](#task-description)
+  - [Data Models and Interactions](#data-models-and-interactions)
+  - [Functions for interacting with the DOM](#functions-for-interacting-with-the-dom)
+  - [Wiring Everything together](#wiring-everything-together)
+- [Guidelines](#guidelines)
+- [Submission](#submission)
+- [Evaluation Criteria](#evaluation-criteria)
+- [Bonus Tasks](#bonus-tasks)
+  - [Intro](#intro)
+  - [Hard](#hard)
+  - [Extra Hard](#extra-hard)
+- [Links](#links)
 
 ## Task Description
 
-### Provided Models and Interfaces
+### Data Models and Interactions
 
-We have provided you with the following models and interfaces that define the structure of our Todo List:
+We have provided you with the following definitions for the data models and methods for interacting with these. This is what defines the structure of our Todo List:
 
 ```javascript
 /**
- * An example of a single
- * Todo item we will store.
+ * Examples of the Todo items
+ * we will store in our Todo List
  */
 const exampleTodo1 = {
   id: 0,
@@ -36,8 +55,12 @@ const exampleTodo2 = {
  * we need for creating a
  * new Todo item
  */
-const exampleUserSubmitted = {
+const exampleUserSubmitted1 = {
   title: "Mince Meat",
+};
+
+const exampleUserSubmitted2 = {
+  title: "Catch Piranhas",
 };
 
 // The required set of function
@@ -61,41 +84,51 @@ function getAllTodoes() {}
 function addTodo(userSubmitted) {}
 ```
 
-### Functions to Implement
+### Functions for interacting with the DOM
 
-You are required to implement the todo list according to the interface.
-In addition you need atleast the following functions for creating elements and updating the DOM:
+You are required to implement the todo list according to the previous definitions.
+In addition you need atleast the following functions for:
 
-#### 1. Creating the Todo HTML
+1. Creating the HTLM for a todo item
 
-```javascript
-/**
- * This function should take in one of our
- * Todo objects and return a new
- * freshly generated HTML element
- *
- * @param {Todo} todo
- */
-function createTodoElement(todo)
-```
+   ```javascript
+   /**
+    * This function should take in one of our
+     * Todo objects and return a new
+     * freshly generated HTML element
+     *
+     * @param {Todo} todo
+     */
+   function createTodoElement(todo)
+   ```
 
-This function should take a `Todo` item as input and generate an HTML element that represents that Todo. You have creative freedom to design the HTML structure as you see fit.
+   Exactly what HTML and styling you choose to apply to that HTML are entirely up to you. As a minimum it should be semantically correct and have some styling applied to look somewhat decent.
 
-#### 2. Keeping the DOM updated
+   **TIPS**
 
-```javascript
-/**
- * This function should be able to
- * take in a list of Todo objects
- * and then update the DOM to
- * display only these
- *
- * @param {Todo[]} todoes
- */
-updateDisplay(todoes);
-```
+   Start by writing a static mock example in `index.html` to get a feel for how a single todo item should look, before trying to create a bunch of these with JavaScript.
 
-This function should update the display with the current list of Todos. To keep things simple, you should delete whatever Todo elements are already displayed and recreate them based on the updated list of Todos.
+   Use the mockups to see how the list itself should be styled.
+
+2. Keeping the DOM up to date
+
+   ```javascript
+   /**
+    * This function should be able to
+    * take in a list of Todo objects
+    * and then update the DOM to
+    * display only these
+    *
+    * @param {Todo[]} todoes
+    */
+   updateDisplay(todoes);
+   ```
+
+   This function should update the display with the current list of Todos.
+
+   **TIPS**
+
+   To keep things simple, you should delete whatever Todo elements are already displayed and recreate them based on the passed in list of Todos.
 
 ### Wiring Everything Together
 
@@ -103,7 +136,7 @@ In addition to implementing the functions mentioned above, your task is to wire 
 
 - Creating an HTML page that includes an input field for adding new Todos and a section for displaying the Todos.
 - Adding necessary event listeners to the input field and any other relevant elements to handle user interactions (e.g., adding new Todos).
-- Using the provided `TodoList` interface to manage the list of Todos, adding new Todos, and retrieving all Todos.
+- Using the `TodoList` module you created to manage the list of Todos, adding new Todos, and retrieving all Todos.
 
 ## Guidelines
 
@@ -125,7 +158,7 @@ Please submit the following as part of your assignment:
 
 Your assignment will be evaluated based on the following criteria:
 
-- Correct implementation of the `TodoList` interface.
+- Correct implementation of the `TodoList` functions.
 - Proper rendering of Todo elements using the `createTodoElement` and `updateDisplay` functions.
 - Functional user interface with event listeners for adding Todos.
 - Code organization and readability.
@@ -133,7 +166,11 @@ Your assignment will be evaluated based on the following criteria:
 
 Good luck with your assignment, and have fun building your Todo List application! If you have any questions or need clarification, feel free to reach out for assistance.
 
-## Bonus Tasks (Expand the TodoList Interface)
+## Bonus Tasks
+
+### Intro
+
+#### Expand the TodoList Interface
 
 For those who want to challenge themselves further, consider expanding the TodoList interface with new methods and wiring them up in your Todo List application. Here are some extensions you could try to implement:
 
@@ -161,9 +198,30 @@ function getIncompleteTodos() {}
 function getFilteredTodoes(?) {}
 ```
 
-## Hard
+#### Uppgrade the user input
 
-Another set of slightly harder methods that can be implemented. These require you to somehow add event listners to the HTLM elments that you create and have them call these functions (there are other options here, but that's is probably the simplest).
+Instead of using a simple `<input type="text" />` and a `<button>` exchange it to use a `<form>` element instead. And instead of listening for a `click` event, listen for the [forms `submit` event](https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/submit_event) instead.
+
+Using the `Enter` key when one of the `<form>` elements input are selected triggers the forms `submit` event. Which default action is to send the content of the form to the server your web application is hosted at. This is probably not what you want for this application. To prevent this you will have to look at how to use the `event` object which is passed to all event handlers and use the `event.preventDefault()` method to stop this default action.
+
+```javascript
+const formElement = document.querySelector("form");
+formElement.addEventListner("submit", (submitEvent) => {
+  submitEvent.preventDefault(); // Default action prevented
+  // Rest of your logic
+});
+```
+
+**TIPS**
+
+- [MDN <form> element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form)
+- Look at [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData), which is an easier way of interacting with all the values contained in the input fields of a form.
+
+### Hard
+
+#### Add more interactivity
+
+Another set of slightly harder methods that can be implemented. These require you to somehow add event listners to the HTLM elments that you create and have them call these functions (there are other options here, but that's probably the simplest).
 
 ```javascript
 /**
@@ -188,9 +246,11 @@ function deleteTodo(todoId: number) {}
 function updateTodoTitle(todoId: number, newTitle: string) {}
 ```
 
-## Extra Hard
+### Extra Hard
 
-A nice addition which would simplify running our todo function would be to implement something similar to the addEventListner method that comes with the browser. See if you can figure out how these should work.
+#### Plan for unknown future extensions
+
+A nice addition which would simplify using our Todo List would be to implement something similar to the addEventListner method that is part of the browser. See if you can figure out how these should work.
 
 ```javascript
 /**
@@ -216,35 +276,35 @@ function removeChangeListner(listner) {}
 
 - Setup the update display to be run everytime the todolist changes
 
-```javascript
-todoList.addChangeListner((todoes) => console.log(todoes));
+  ```javascript
+  todoList.addChangeListner((todoes) => console.log(todoes));
 
-// These should log the current content of
-// the todo list to the console
-todoList.addTodo({ title: "Hello World" });
-todoList.addTodo({ title: "hello World" });
-```
+  // These should log the current content of
+  // the todo list to the console
+  todoList.addTodo({ title: "Hello World" });
+  todoList.addTodo({ title: "hello World" });
+  ```
 
 - Setup a new function for persisting the Todo List to [Local Storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) whenever it changes
 
-```javascript
-todoList.addChangeListner((todoes) => {
-  const serializedTodoes = JSON.stringify(todoes);
-  localStorage.setItem("todolist", serializedTodoes);
-});
+  ```javascript
+  todoList.addChangeListner((todoes) => {
+    const serializedTodoes = JSON.stringify(todoes);
+    localStorage.setItem("todolist", serializedTodoes);
+  });
 
-// Now whenever you mutate (edit) the todo list
-// It should be reflected in the browsers local storage
-todoList.addTodo({ title: "Hello World" });
-todoList.addTodo({ title: "hello World" });
+  // Now whenever you mutate (edit) the todo list
+  // It should be reflected in the browsers local storage
+  todoList.addTodo({ title: "Hello World" });
+  todoList.addTodo({ title: "hello World" });
 
-// Now you just need to figure out how to
-// load the stored data on startup...
-```
+  // Now you just need to figure out how to
+  // load the stored data on startup...
+  ```
 
 </details>
 
-You need to do some research for how to implement this, [secret hint](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
+You need to do some research for how to implement this. [Hint](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
 
 ## Links
 
