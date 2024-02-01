@@ -1,4 +1,17 @@
 /**
+ * The shape of the Todo item
+ * we stor
+ *
+ * @typedef {{
+* id: number,
+* title: string,
+* isComplete: boolean,
+* createdAt: Date,
+* updatedAt: Date,
+* }} Todo
+*/
+
+/**
  * The file where everything comes together
  */
 import * as todoList from "./scripts/todoList.js";

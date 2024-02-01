@@ -5,5 +5,6 @@
  *
  * Might I suggest you create a function for generating
  * random IDs?
- * type generateId = () => number
+ * Something ala:
+ * @typedef {() => number} GenerateId
  */
