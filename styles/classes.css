@@ -1,28 +1,4 @@
 /* Any of your own custom CSS classes are in here */
-.flex {
-  display: flex;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.grow {
-  flex-grow: 1;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.min-h-screen {
-  min-height: 100vh;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
 .todo-list-inputs {
   padding: 1rem;
 }
