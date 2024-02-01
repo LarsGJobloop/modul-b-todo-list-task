@@ -18,3 +18,18 @@
 .min-h-screen {
   min-height: 100vh;
 }
+
+.justify-center {
+  justify-content: center;
+}
+
+.todo-list-inputs {
+  padding: 1rem;
+}
+
+.todo-item {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgb(199, 199, 199);
+  padding: 0px 2rem;
+}
