@@ -10,32 +10,55 @@ In this assignment, you will be working on creating a simple Todo List applicati
 
 We have provided you with the following models and interfaces that define the structure of our Todo List:
 
-```typescript
+```javascript
 /**
- * A Todo Item
+ * An example of a single
+ * Todo item we will store.
  */
-type Todo = {
-  id: number;
-  title: string;
-  isComplete: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+const exampleTodo1 = {
+  id: 0,
+  title: "Feed Sharks",
+  isComplete: false,
+  createdAt: "3/12/23",
+  updatedAt: "3/12/23",
+};
+
+const exampleTodo2 = {
+  id: 12,
+  title: "Dance in the moonlight",
+  isComplete: false,
+  createdAt: "12/12/12",
+  updatedAt: "12/12/12",
 };
 
 /**
- * The information needed when creating a new Todo
+ * An example of what inputs
+ * we need for creating a
+ * new Todo item
  */
-type TodoCreationInfo = {
-  title: string;
+const exampleUserSubmitted = {
+  title: "Mince Meat",
 };
 
+// The required set of function
+// we need to have a minamal usable
+// Todo List
+
 /**
- * The initial methods supported by our Todo List
+ * This function should return all of our
+ * current stored Todoes
  */
-interface TodoList {
-  getAllTodoes: () => Todo[];
-  addTodo:      (data: TodoCreationInfo) => boolean;
-}
+function getAllTodoes() {}
+
+/**
+ * This function should take in one of our
+ * user submitted objects and from
+ * that create a new Todo Object which gets
+ * inserted into our Todo List
+ *
+ * @param {{title: string}} userSubmitted
+ */
+function addTodo(userSubmitted) {}
 ```
 
 ### Functions to Implement
@@ -43,11 +66,34 @@ interface TodoList {
 You are required to implement the todo list according to the interface.
 In addition you need atleast the following functions for creating elements and updating the DOM:
 
-#### 1. `createTodoElement(todo: Todo)`
+#### 1. Creating the Todo HTML
+
+```javascript
+/**
+ * This function should take in one of our
+ * Todo objects and return a new
+ * freshly generated HTML element
+ *
+ * @param {Todo} todo
+ */
+function createTodoElement(todo)
+```
 
 This function should take a `Todo` item as input and generate an HTML element that represents that Todo. You have creative freedom to design the HTML structure as you see fit.
 
-#### 2. `updateDisplay(todoes: Todo[])`
+#### 2. Keeping the DOM updated
+
+```javascript
+/**
+ * This function should be able to
+ * take in a list of Todo objects
+ * and then update the DOM to
+ * display only these
+ *
+ * @param {Todo[]} todoes
+ */
+updateDisplay(todoes);
+```
 
 This function should update the display with the current list of Todos. To keep things simple, you should delete whatever Todo elements are already displayed and recreate them based on the updated list of Todos.
 
@@ -91,42 +137,114 @@ Good luck with your assignment, and have fun building your Todo List application
 
 For those who want to challenge themselves further, consider expanding the TodoList interface with new methods and wiring them up in your Todo List application. Here are some extensions you could try to implement:
 
-```typescript
-interface TodoList {
-  // Existing methods...
+```javascript
+/**
+ * Returns all completed todoes
+ *
+ * @returns {Todo[]}
+ */
+function getCompletedTodos() {}
 
-  markTodoComplete:   (todoId: number) => boolean;
-  deleteTodo:         (todoId: number) => boolean;
-  getCompletedTodos:  () => Todo[];
-  getIncompleteTodos: () => Todo[];
-  updateTodoTitle:    (todoId: number, newTitle: string) => boolean;
-}
+/**
+ * Returns all incomplete todoes
+ *
+ * @returns {Todo[]}
+ */
+function getIncompleteTodos() {}
+
+/**
+ * Returns all custom filtered list of todoes
+ *
+ * @param {?} ?
+ * @returns {Todo[]}
+ */
+function getFilteredTodoes(?) {}
 ```
 
-**Extra Hard**
+## Hard
+
+Another set of slightly harder methods that can be implemented. These require you to somehow add event listners to the HTLM elments that you create and have them call these functions (there are other options here, but that's is probably the simplest).
+
+```javascript
+/**
+ * Marks a todo as completed
+ *
+ * @returns {void}
+ */
+function markTodoComplete(todoId: number) {}
+
+/**
+ * Deletes a specific todo
+ *
+ * @returns {void}
+ */
+function deleteTodo(todoId: number) {}
+
+/**
+ * Updates the title of a todo
+ *
+ * @returns {void}
+ */
+function updateTodoTitle(todoId: number, newTitle: string) {}
+```
+
+## Extra Hard
 
 A nice addition which would simplify running our todo function would be to implement something similar to the addEventListner method that comes with the browser. See if you can figure out how these should work.
 
-```typescript
-type ChangeListner: (currentTodoes: Todo[]) => void
+```javascript
+/**
+ * Can be used to register a function
+ * which will be called everytime the underlying
+ * todo list changes
+ *
+ * @param {(todoes: Todo[]) => void} listner
+ */
+function addChangeListner(listner) {}
 
-interface TodoList {
-  // Existing methods...
-
-  addChangeListner:     (listner: ChangeListner) => boolean;
-  removeChangeListner:  (listner: ChangeListner) => boolean;
-}
+/**
+ * Removes a registered listner, so it's no longer
+ * called when the underlying todo list changes
+ *
+ * @param {(todoes: Todo[]) => void} listner
+ */
+function removeChangeListner(listner) {}
 ```
 
-_You might have to do some searching for how these are implmented, [secret hint](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)_
-
 <details>
-<summary>Nice stuff you can do with these</summary>
+<summary>Example Usage</summary>
 
 - Setup the update display to be run everytime the todolist changes
+
+```javascript
+todoList.addChangeListner((todoes) => console.log(todoes));
+
+// These should log the current content of
+// the todo list to the console
+todoList.addTodo({ title: "Hello World" });
+todoList.addTodo({ title: "hello World" });
+```
+
 - Setup a new function for persisting the Todo List to [Local Storage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) whenever it changes
 
-<details>
+```javascript
+todoList.addChangeListner((todoes) => {
+  const serializedTodoes = JSON.stringify(todoes);
+  localStorage.setItem("todolist", serializedTodoes);
+});
+
+// Now whenever you mutate (edit) the todo list
+// It should be reflected in the browsers local storage
+todoList.addTodo({ title: "Hello World" });
+todoList.addTodo({ title: "hello World" });
+
+// Now you just need to figure out how to
+// load the stored data on startup...
+```
+
+</details>
+
+You need to do some research for how to implement this, [secret hint](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern)
 
 ## Links
 
